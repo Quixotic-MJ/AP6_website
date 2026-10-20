@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal Component — Mark Institute of Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+
+
+<!-- ============================================================
+     PART 1 — MODAL STYLES
+     ============================================================ -->
+
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+  <div class="topbar"></div>
+
+  <!-- ============================================================
+       PART 2 — MODAL ROOT
+       ============================================================ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card" id="modalCard"></div>
+  </div>
+
+  <!-- Demo Page Content -->
+  <div class="demo-wrap">
+    <p class="kicker">modal.js</p>
+    <h1>Modal component</h1>
+    <p>One reusable modal that covers three jobs: showing details, collecting urgent input, and confirming a decision. Click any button below to try it.</p>
+
+    <div class="demo-section">
+      <h2>show details</h2>
+      <div class="demo-buttons">
+        <button class="demo-btn" onclick="demoFacultyDetail()">View faculty member</button>
+        <button class="demo-btn" onclick="demoEventDetail()">View event details</button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>collect urgent input</h2>
+      <div class="demo-buttons">
+        <button class="demo-btn" onclick="demoQuickForm()">Quick contact form</button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>confirm a decision</h2>
+      <div class="demo-buttons">
+        <button class="demo-btn" onclick="demoConfirmDanger()">Withdraw application</button>
+        <button class="demo-btn primary" onclick="demoConfirmSafe()">Submit application</button>
+      </div>
+    </div>
+
+    <div class="result-log" id="resultLog">// actions you take in the modal will be logged here</div>
+  </div>
+
+  <footer>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project</footer>
+
+  <!-- ============================================================
+       PART 3 — MODAL ENGINE
+       ============================================================ -->
+  <script id="modal-component-script">
+    const Modal = (function(){
+      const overlay = document.getElementById('modalOverlay');
+      const card = document.getElementById('modalCard');
+
+      function close(){
+        overlay.classList.remove('open');
+        card.innerHTML = '';
+      }
+
+      function open(html){
+        card.innerHTML = html;
+        overlay.classList.add('open');
+      }
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+
+      function detail(title, kicker, fields){
+        const rows = fields.map(f =>
+          `<div class="modal-detail-row">
+             <span class="modal-detail-label">${f.label}</span>
+             <span class="modal-detail-value">${f.value}</span>
+           </div>`
+        ).join('');
+
+        open(`
+          <div class="modal-titlebar">
+            <div>
+              <p class="modal-kicker">${kicker || ''}</p>
+              <h3 class="modal-title">${title}</h3>
+            </div>
+            <button class="modal-close" data-close>&times;</button>
+          </div>
+          <div class="modal-body">${rows}</div>
+          <div class="modal-footer">
+            <button class="modal-btn modal-btn-ghost" data-close>Close</button>
+          </div>
+        `);
+        card.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', close));
+      }
+
+      function form(title, kicker, fields, onSubmit){
+        const fieldsHtml = fields.map(f => {
+          const tag = f.type === 'textarea' ? 'textarea' : 'input';
+          const typeAttr = f.type === 'textarea' ? '' : `type="${f.type || 'text'}"`;
+          return `
+            <div class="modal-field">
+              <label>${f.label}</label>
+              <${tag} id="mf_${f.id}" ${typeAttr} placeholder="${f.placeholder || ''}" ${f.required ? 'required' : ''}></${tag}>
+              <p class="modal-error" id="mf_${f.id}_err">This field is required.</p>
+            </div>`;
+        }).join('');
+
+        open(`
+          <div class="modal-titlebar">
+            <div>
+              <p class="modal-kicker">${kicker || ''}</p>
+              <h3 class="modal-title">${title}</h3>
+            </div>
+            <button class="modal-close" data-close>&times;</button>
+          </div>
+          <div class="modal-body">${fieldsHtml}</div>
+          <div class="modal-footer">
+            <button class="modal-btn modal-btn-ghost" data-close>Cancel</button>
+            <button class="modal-btn modal-btn-primary" id="modalSubmitBtn">Submit</button>
+          </div>
+        `);
+
+        card.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', close));
+
+        document.getElementById('modalSubmitBtn').addEventListener('click', () => {
+          const values = {};
+          let valid = true;
+
+          fields.forEach(f => {
+            const input = document.getElementById(`mf_${f.id}`);
+            const err = document.getElementById(`mf_${f.id}_err`);
+            const val = input.value.trim();
+
+            let fieldValid = true;
+            if (f.required && val === '') fieldValid = false;
+            if (f.type === 'email' && val !== '' && !val.includes('@')) fieldValid = false;
+
+            err.classList.toggle('show', !fieldValid);
+            if (!fieldValid) valid = false;
+            values[f.id] = val;
+          });
+
+          if (!valid) return;
+
+          const result = onSubmit ? onSubmit(values) : true;
+          if (result !== false) close();
+        });
+      }
+
+      function confirm(title, message, onConfirm, options){
+        options = options || {};
+        const confirmLabel = options.confirmLabel || 'Confirm';
+        const cancelLabel = options.cancelLabel || 'Cancel';
+        const btnClass = options.danger ? 'modal-btn-danger' : 'modal-btn-primary';
+
+        open(`
+          <div class="modal-titlebar">
+            <h3 class="modal-title">${title}</h3>
+            <button class="modal-close" data-close>&times;</button>
+          </div>
+          <div class="modal-body"><p>${message}</p></div>
+          <div class="modal-footer">
+            <button class="modal-btn modal-btn-ghost" data-close>${cancelLabel}</button>
+            <button class="modal-btn ${btnClass}" id="modalConfirmBtn">${confirmLabel}</button>
+          </div>
+        `);
+
+        card.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', close));
+        document.getElementById('modalConfirmBtn').addEventListener('click', () => {
+          if (onConfirm) onConfirm();
+          close();
+        });
+      }
+
+      return { detail, form, confirm, close };
+    })();
+  </script>
+
+  <!-- Demo Scripts -->
+  <script>
+    function log(msg){
+      document.getElementById('resultLog').textContent = msg;
+    }
+
+    function demoFacultyDetail(){
+      Modal.detail(
+        'Dr. Elena Cruz',
+        'faculty.js',
+        [
+          { label: 'Role', value: 'Dean, College of Computing' },
+          { label: 'Department', value: 'Computing' },
+          { label: 'Email', value: 'elena.cruz@mark.edu' },
+          { label: 'Office hours', value: 'Mon &amp; Wed, 2–4 PM' }
+        ]
+      );
+    }
+
+    function demoEventDetail(){
+      Modal.detail(
+        'Hackathon Weekend',
+        'events.js',
+        [
+          { label: 'Date', value: 'Sep 20' },
+          { label: 'Category', value: 'Academic' },
+          { label: 'Location', value: 'Innovation Hall' },
+          { label: 'Registration', value: 'Open until Sep 18' }
+        ]
+      );
+    }
+
+    function demoQuickForm(){
+      Modal.form(
+        'Quick contact',
+        'contact.html',
+        [
+          { id: 'name', label: 'Your name', type: 'text', placeholder: 'Juan Dela Cruz', required: true },
+          { id: 'email', label: 'Email', type: 'email', placeholder: 'you@example.com', required: true },
+          { id: 'message', label: 'Message', type: 'textarea', placeholder: 'How can we help?', required: false }
+        ],
+        function(values){
+          log('Form submitted:\n' + JSON.stringify(values, null, 2));
+        }
+      );
+    }
+
+    function demoConfirmDanger(){
+      Modal.confirm(
+        'Withdraw application?',
+        'This will cancel your pending application. This can\'t be undone.',
+        function(){ log('Application withdrawn.'); },
+        { confirmLabel: 'Withdraw', danger: true }
+      );
+    }
+
+    function demoConfirmSafe(){
+      Modal.confirm(
+        'Submit application?',
+        'Make sure your program choice and details are correct before submitting.',
+        function(){ log('Application submitted!'); },
+        { confirmLabel: 'Submit' }
+      );
+    }
+  </script>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/tech-bg.js"></script>
+</body>
+</html>

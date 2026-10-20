@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal — Mark Institute of Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="admin-theme">
+
+<!-- Tech Background -->
+<div class="stage">
+  <div class="grid"></div>
+  <div class="glow"></div>
+  <div class="scanline"></div>
+  <canvas id="net"></canvas>
+</div>
+
+<div class="app-header">
+  <div class="brand" id="brandDashboard" style="cursor:pointer;" title="Go to Dashboard">
+    <div class="brand-mark"></div>
+    <div class="brand-name">Mark Institute <span class="sub">/ Admin Portal</span></div>
+  </div>
+  <div class="header-right">
+    <div class="staff-chip">
+      <span class="avatar" id="avatarInitial">A</span>
+      <span id="staffTag">staff</span>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Log out</button>
+  </div>
+</div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="side-label">menu</div>
+    <button class="nav-item active" data-view="dashboard"><span class="nav-dot"></span>Dashboard</button>
+    <button class="nav-item" data-view="applications"><span class="nav-dot"></span>Applications</button>
+    <button class="nav-item" data-view="events"><span class="nav-dot"></span>Manage Events</button>
+    <button class="nav-item" data-view="faculty"><span class="nav-dot"></span>Manage Faculty</button>
+  </aside>
+
+  <main>
+
+    <!-- Dashboard -->
+    <section class="view active" id="view-dashboard">
+      <div class="view-header">
+        <p class="view-kicker">dashboard</p>
+        <h1 class="view-title" id="welcomeHeading">Admin dashboard</h1>
+      </div>
+      <p class="demo-note">Demo admin portal &mdash; reachable by anyone who visits admin login. Changes here only exist in this browser tab; nothing is saved to a real database yet.</p>
+      <div class="stats" id="statsRow"></div>
+    </section>
+
+    <!-- Applications -->
+    <section class="view" id="view-applications">
+      <div class="view-header">
+        <p class="view-kicker">applications</p>
+        <h1 class="view-title">Review applications</h1>
+      </div>
+      <div class="app-list" id="appList"></div>
+    </section>
+
+    <!-- Manage Events -->
+    <section class="view" id="view-events">
+      <div class="view-header">
+        <p class="view-kicker">manage events</p>
+        <h1 class="view-title">Events</h1>
+      </div>
+      <div class="manage-card">
+        <div class="field"><label>title</label><input type="text" id="evTitle" placeholder="e.g. Robotics Showcase"></div>
+        <div class="field"><label>date</label><input type="text" id="evDate" placeholder="e.g. Dec 5"></div>
+        <div class="field">
+          <label>category</label>
+          <select id="evCat">
+            <option>Academic</option>
+            <option>Sports</option>
+            <option>Holiday</option>
+          </select>
+        </div>
+        <button class="add-btn" id="addEventBtn">Add event</button>
+      </div>
+      <div class="manage-list" id="eventManageList"></div>
+    </section>
+
+    <!-- Manage Faculty -->
+    <section class="view" id="view-faculty">
+      <div class="view-header">
+        <p class="view-kicker">manage faculty</p>
+        <h1 class="view-title">Faculty</h1>
+      </div>
+      <div class="manage-card">
+        <div class="field"><label>name</label><input type="text" id="facName" placeholder="e.g. Prof. Ana Reyes"></div>
+        <div class="field"><label>role</label><input type="text" id="facRole" placeholder="e.g. Cybersecurity"></div>
+        <div class="field"><label>email</label><input type="text" id="facEmail" placeholder="ana.reyes@markinstitute.edu"></div>
+        <button class="add-btn" id="addFacultyBtn">Add faculty</button>
+      </div>
+      <div class="manage-list" id="facultyManageList"></div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // ---- Session check (demo-only, not real auth) ----
+  const session = JSON.parse(localStorage.getItem('markDemoAdmin') || 'null');
+  if (!session) {
+    window.location.href = 'admin-login.html';
+  } else {
+    document.getElementById('staffTag').textContent = session.name;
+    document.getElementById('avatarInitial').textContent = session.name.charAt(0).toUpperCase();
+    document.getElementById('welcomeHeading').textContent = 'Welcome, ' + session.name;
+  }
+
+  const handleLogout = () => {
+    Modal.confirm(
+      'Log out of Admin Portal?',
+      'Are you sure you want to log out of the administration portal? You will need to sign in again to manage applications, events, and faculty.',
+      () => {
+        localStorage.removeItem('markDemoAdmin');
+        window.location.href = 'admin-login.html';
+      },
+      { confirmLabel: 'Log out', cancelLabel: 'Cancel', danger: true, kicker: 'confirm action' }
+    );
+  };
+  document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+
+  document.getElementById('brandDashboard').addEventListener('click', () => {
+    showView('dashboard');
+  });
+
+  // ---- View switching (sidebar navigation) ----
+  const navItems = document.querySelectorAll('.nav-item');
+  const views = document.querySelectorAll('.view');
+
+  function showView(name){
+    navItems.forEach(i => i.classList.toggle('active', i.dataset.view === name));
+    views.forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => showView(item.dataset.view));
+  });
+
+  // ---- Applications (the "Enrolled?" decision from the storyboard) ----
+  const applications = [
+    { name: "Juana Dela Cruz", email: "juana.delacruz@example.com", program: "BS Computer Science", status: "pending" },
+    { name: "Miguel Santos", email: "miguel.santos@example.com", program: "BS Information Technology", status: "pending" },
+    { name: "Alyssa Reyes", email: "alyssa.reyes@example.com", program: "BS Data Science", status: "pending" },
+    { name: "Diego Cruz", email: "diego.cruz@example.com", program: "Diploma in Web Development", status: "pending" }
+  ];
+
+  const appList = document.getElementById('appList');
+
+  function renderApplications(){
+    appList.innerHTML = '';
+    applications.forEach((app, i) => {
+      const row = document.createElement('div');
+      row.className = 'app-row';
+
+      let rightHtml;
+      if (app.status === 'pending') {
+        rightHtml = `
+          <div class="app-actions">
+            <button class="app-btn approve" data-index="${i}" data-action="enroll">Enroll</button>
+            <button class="app-btn waitlist" data-index="${i}" data-action="waitlist">Waitlist</button>
+          </div>`;
+      } else {
+        const cls = app.status === 'enrolled' ? 'enrolled' : 'waitlisted';
+        const label = app.status === 'enrolled' ? 'Enrolled' : 'Waitlisted';
+        rightHtml = `<span class="status-badge ${cls}">${label}</span>`;
+      }
+
+      row.innerHTML = `
+        <div>
+          <div class="a-name">${app.name}</div>
+          <div class="a-meta">${app.email} &middot; ${app.program}</div>
+        </div>
+        ${rightHtml}
+      `;
+      appList.appendChild(row);
+    });
+  }
+
+  appList.addEventListener('click', function(e){
+    if (!e.target.classList.contains('app-btn')) return;
+    const index = Number(e.target.dataset.index);
+    const action = e.target.dataset.action;
+    applications[index].status = action === 'enroll' ? 'enrolled' : 'waitlisted';
+    renderApplications();
+    updateStats();
+  });
+
+  renderApplications();
+
+  // ---- Manage events ----
+  const events = [
+    { title: "Freshmen Orientation", date: "Aug 15", cat: "Academic" },
+    { title: "Hackathon Weekend", date: "Sep 20", cat: "Academic" },
+    { title: "Career Fair", date: "Nov 18", cat: "Academic" }
+  ];
+
+  const eventManageList = document.getElementById('eventManageList');
+
+  function renderEventManageList(){
+    eventManageList.innerHTML = '';
+    events.forEach((ev, i) => {
+      const row = document.createElement('div');
+      row.className = 'manage-row';
+      row.innerHTML = `
+        <div>
+          <div class="m-title">${ev.title}</div>
+          <div class="m-sub">${ev.date} &middot; ${ev.cat}</div>
+        </div>
+        <button class="remove-btn" data-index="${i}">Remove</button>
+      `;
+      eventManageList.appendChild(row);
+    });
+  }
+
+  document.getElementById('addEventBtn').addEventListener('click', () => {
+    const title = document.getElementById('evTitle').value.trim();
+    const date = document.getElementById('evDate').value.trim();
+    const cat = document.getElementById('evCat').value;
+    if (title === '' || date === '') return;
+    events.push({ title, date, cat });
+    document.getElementById('evTitle').value = '';
+    document.getElementById('evDate').value = '';
+    renderEventManageList();
+    updateStats();
+  });
+
+  eventManageList.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('remove-btn')) return;
+    events.splice(Number(e.target.dataset.index), 1);
+    renderEventManageList();
+    updateStats();
+  });
+
+  renderEventManageList();
+
+  // ---- Manage faculty ----
+  const faculty = [
+    { name: "Dr. Elena Cruz", role: "Dean, College of Computing", email: "elena.cruz@markinstitute.edu" },
+    { name: "Prof. Marcus Reyes", role: "Software Engineering", email: "marcus.reyes@markinstitute.edu" }
+  ];
+
+  const facultyManageList = document.getElementById('facultyManageList');
+
+  function renderFacultyManageList(){
+    facultyManageList.innerHTML = '';
+    faculty.forEach((f, i) => {
+      const row = document.createElement('div');
+      row.className = 'manage-row';
+      row.innerHTML = `
+        <div>
+          <div class="m-title">${f.name}</div>
+          <div class="m-sub">${f.role}</div>
+        </div>
+        <button class="remove-btn" data-index="${i}">Remove</button>
+      `;
+      facultyManageList.appendChild(row);
+    });
+  }
+
+  document.getElementById('addFacultyBtn').addEventListener('click', () => {
+    const name = document.getElementById('facName').value.trim();
+    const role = document.getElementById('facRole').value.trim();
+    const email = document.getElementById('facEmail').value.trim();
+    if (name === '' || role === '') return;
+    faculty.push({ name, role, email });
+    document.getElementById('facName').value = '';
+    document.getElementById('facRole').value = '';
+    document.getElementById('facEmail').value = '';
+    renderFacultyManageList();
+    updateStats();
+  });
+
+  facultyManageList.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('remove-btn')) return;
+    faculty.splice(Number(e.target.dataset.index), 1);
+    renderFacultyManageList();
+    updateStats();
+  });
+
+  renderFacultyManageList();
+
+  // ---- Stats row (derived from the arrays above) ----
+  const statsRow = document.getElementById('statsRow');
+
+  function updateStats(){
+    const pending = applications.filter(a => a.status === 'pending').length;
+    const enrolled = applications.filter(a => a.status === 'enrolled').length;
+    statsRow.innerHTML = `
+      <div class="stat-card"><div class="num">${pending}</div><div class="label">pending apps</div></div>
+      <div class="stat-card"><div class="num">${enrolled}</div><div class="label">enrolled today</div></div>
+      <div class="stat-card"><div class="num">${events.length}</div><div class="label">events</div></div>
+      <div class="stat-card"><div class="num">${faculty.length}</div><div class="label">faculty</div></div>
+    `;
+  }
+
+  updateStats();
+</script>
+
+<script src="../assets/js/modal.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+</body>
+</html>

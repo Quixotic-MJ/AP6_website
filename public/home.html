@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Institute of Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="topbar"></div>
+
+<section class="hero">
+  <div>
+    <p class="kicker">Mark Institute of Technology</p>
+    <h1>Where future engineers write their first line of code.</h1>
+    <p>A college built around computing, engineering, and the people who make software real. Explore our programs, meet the faculty, and see what's happening on campus.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="admissions.html">Apply now</a>
+      <a class="btn btn-ghost" href="programs.html">View programs</a>
+      <a class="btn btn-ghost" href="../student/login.html">Student login &rarr;</a>
+    </div>
+  </div>
+  <div class="code-window">
+    <div class="code-titlebar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="code-filename">welcome</span>
+    </div>
+    <pre class="code"><span class="c-key">const</span> college <span class="c-punc">=</span> {
+  name<span class="c-punc">:</span> <span class="c-str">"Mark Institute of Technology"</span>,
+  founded<span class="c-punc">:</span> <span class="c-num">2005</span>,
+  programs<span class="c-punc">:</span> <span class="c-num">5</span>,
+  <span class="c-fn">motto</span>() {
+    <span class="c-key">return</span> <span class="c-str">"Build. Debug. Graduate."</span>;
+  }
+};
+
+college.motto();
+<span class="c-com">// &rarr; "Build. Debug. Graduate."</span></pre>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="num">3,200+</div><div class="label">students</div></div>
+  <div class="stat"><div class="num">5</div><div class="label">programs</div></div>
+  <div class="stat"><div class="num">60+</div><div class="label">faculty</div></div>
+  <div class="stat"><div class="num">2005</div><div class="label">founded</div></div>
+</div>
+
+<section class="announce-section">
+  <h2>Latest announcements</h2>
+  <div class="announce-list" id="announceList"></div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project</div>
+    <div>
+      <a href="../admin/admin-login.html" class="staff-login-btn">
+        <span class="staff-dot"></span>
+        <span>Staff login &rarr;</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const announcements = [
+    { title: "Enrollment for AY 2026-2027 is now open", date: "Sep 1" },
+    { title: "Hackathon Weekend registration opens next week", date: "Sep 5" },
+    { title: "Library extends hours during finals week", date: "Sep 10" }
+  ];
+
+  const list = document.getElementById('announceList');
+  announcements.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'announce-item';
+    row.innerHTML = `<span class="a-title">${item.title}</span><span class="a-date">${item.date}</span>`;
+    list.appendChild(row);
+  });
+</script>
+
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+
+</body>
+</html>

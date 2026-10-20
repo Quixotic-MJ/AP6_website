@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Mark Institute of Technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body class="admin-theme">
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+  <div class="topbar">
+    <a href="../public/home.html" class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">Mark Institute &mdash; Admin</div>
+    </a>
+    <nav>
+      <a href="../student/login.html">Student Login</a>
+      <a href="../public/home.html">&larr; back to home</a>
+    </nav>
+  </div>
+
+  <div class="login-wrap">
+    <p class="kicker">admin-login</p>
+    <h1>Admin login</h1>
+    <p class="login-sub">For staff reviewing applications and managing faculty, events, and programs.</p>
+
+
+    <div class="login-card">
+      <form id="adminLoginForm">
+        <div class="field">
+          <label>staff email</label>
+          <input type="text" id="adminEmail" placeholder="staff@markinstitute.edu">
+          <p class="error-text" id="adminEmailError">Please enter your email.</p>
+        </div>
+        <div class="field">
+          <label>password</label>
+          <input type="password" id="adminPassword" placeholder="Enter any password">
+          <p class="error-text" id="adminPasswordError">Please enter a password.</p>
+        </div>
+        <button type="submit" class="login-btn">Log in &#9656;</button>
+      </form>
+    </div>
+
+    <p class="switch-note">Student looking for portal? <a href="../student/login.html">Student login &rarr;</a></p>
+  </div>
+
+  <footer>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project
+  </footer>
+
+  <script>
+    const form = document.getElementById('adminLoginForm');
+    const emailInput = document.getElementById('adminEmail');
+    const passwordInput = document.getElementById('adminPassword');
+    const emailError = document.getElementById('adminEmailError');
+    const passwordError = document.getElementById('adminPasswordError');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      let valid = true;
+
+      if (emailInput.value.trim() === '') {
+        emailError.classList.add('show');
+        valid = false;
+      } else {
+        emailError.classList.remove('show');
+      }
+
+      if (passwordInput.value.trim() === '') {
+        passwordError.classList.add('show');
+        valid = false;
+      } else {
+        passwordError.classList.remove('show');
+      }
+
+      if (!valid) return;
+
+      const staffName = emailInput.value.split('@')[0];
+      localStorage.setItem('markDemoAdmin', JSON.stringify({
+        name: staffName,
+        email: emailInput.value.trim(),
+        loggedInAt: new Date().toISOString()
+      }));
+
+      window.location.href = 'admin-portal.html';
+    });
+  </script>
+
+  <script src="../assets/js/tech-bg.js"></script>
+</body>
+
+</html>

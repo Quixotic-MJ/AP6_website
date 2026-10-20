@@ -1,0 +1,24 @@
+/* ============================================================
+   Mark Institute of Technology — Design Tokens (tokens.css)
+   ============================================================ */
+
+:root {
+  /* Color Palette */
+  --bg: #05070c;
+  --panel: #1C1F2C;
+  --panel-2: #20233240;
+  --text: #F1F3FB;
+  --muted: #9DA3C0;
+  --line: #2E3347;
+
+  /* Accent Colors */
+  --yellow: #F7DF1E;
+  --coral: #FF6F59;
+  --blue: #7DB8FF;
+  --green: #8FD694;
+  --purple: #C9A6FF;
+
+  /* Typography */
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', sans-serif;
+}

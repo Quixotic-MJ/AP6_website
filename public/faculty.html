@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faculty — Mark Institute of Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="topbar"></div>
+
+<section class="page-header">
+  <p class="kicker">faculty.js</p>
+  <h1>Faculty directory</h1>
+  <p class="page-sub">Search by name or department &mdash; the list below filters live as you type.</p>
+</section>
+
+<div class="search-row">
+  <input type="text" class="search-input" id="searchInput" placeholder="Search faculty by name or department...">
+  <p class="search-count" id="searchCount"></p>
+</div>
+
+<div class="faculty-list" id="facultyList"></div>
+
+<footer>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project</footer>
+
+<script>
+  const faculty = [
+    { name: "Dr. Elena Cruz", role: "Dean, College of Computing", dept: "Computing", email: "elena.cruz@mark.edu" },
+    { name: "Prof. Marcus Reyes", role: "Software Engineering", dept: "Computing", email: "marcus.reyes@mark.edu" },
+    { name: "Dr. Priya Santos", role: "Data Science", dept: "Computing", email: "priya.santos@mark.edu" },
+    { name: "Prof. James Uy", role: "Computer Engineering", dept: "Engineering", email: "james.uy@mark.edu" },
+    { name: "Dr. Lena Fields", role: "Cybersecurity", dept: "Computing", email: "lena.fields@mark.edu" },
+    { name: "Prof. Noah Dizon", role: "Web Development", dept: "Computing", email: "noah.dizon@mark.edu" }
+  ];
+
+  const list = document.getElementById('facultyList');
+  const input = document.getElementById('searchInput');
+  const count = document.getElementById('searchCount');
+
+  function render(term){
+    const query = term.trim().toLowerCase();
+    const results = faculty.filter(f =>
+      f.name.toLowerCase().includes(query) ||
+      f.role.toLowerCase().includes(query) ||
+      f.dept.toLowerCase().includes(query)
+    );
+
+    list.innerHTML = '';
+    if (results.length === 0) {
+      list.innerHTML = '<p class="empty-state">No faculty match that search.</p>';
+    } else {
+      results.forEach(f => {
+        const card = document.createElement('div');
+        card.className = 'faculty-card';
+        card.innerHTML = `
+          <div>
+            <div class="f-name">${f.name}</div>
+            <div class="f-dept">${f.role}</div>
+          </div>
+          <div class="f-email">${f.email}</div>
+        `;
+        list.appendChild(card);
+      });
+    }
+    count.textContent = `Showing ${results.length} of ${faculty.length} faculty members`;
+  }
+
+  input.addEventListener('input', () => render(input.value));
+  render('');
+</script>
+
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+</body>
+</html>

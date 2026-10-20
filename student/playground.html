@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Basics — Playground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="portal.html" class="sidebar-brand" style="text-decoration:none;color:inherit;" title="Back to Student Portal">
+      <div class="brand-mark"></div>
+      <div class="brand-name">js-basics</div>
+    </a>
+    <div class="sidebar-back">
+      <a href="portal.html" class="btn-back-home" title="Back to Student Portal">
+        <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+        <span>Back to portal</span>
+      </a>
+    </div>
+    <div class="sidebar-label">course files</div>
+    <ul class="file-list">
+      <li class="file-item"><a href="lessons.html#intro" class="file-link"><span class="file-dot"></span>intro</a></li>
+      <li class="file-item"><a href="lessons.html#variables" class="file-link"><span class="file-dot"></span>variables</a></li>
+      <li class="file-item"><a href="lessons.html#data-types" class="file-link"><span class="file-dot"></span>data-types</a></li>
+      <li class="file-item"><a href="lessons.html#functions" class="file-link"><span class="file-dot"></span>functions</a></li>
+      <li class="file-item"><a href="lessons.html#arrays" class="file-link"><span class="file-dot"></span>arrays</a></li>
+      <li class="file-item"><a href="lessons.html#objects" class="file-link"><span class="file-dot"></span>objects</a></li>
+    </ul>
+    <div class="sidebar-label">practice &amp; info</div>
+    <ul class="file-list">
+      <li class="file-item active"><a href="playground.html" class="file-link"><span class="file-dot"></span>playground</a></li>
+      <li class="file-item"><a href="quiz.html" class="file-link"><span class="file-dot"></span>quiz</a></li>
+      <li class="file-item"><a href="../public/about.html" class="file-link"><span class="file-dot"></span>About</a></li>
+      <li class="file-item"><a href="../public/resources.html" class="file-link"><span class="file-dot"></span>resources</a></li>
+      <li class="file-item"><a href="../public/contact.html" class="file-link"><span class="file-dot"></span>contact</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout-btn" id="sidebarLogoutBtn">
+        <span>&larr;</span> Log out
+      </button>
+    </div>
+  </aside>
+
+
+<main>
+
+    <section class="pg-header">
+      <p class="kicker">playground</p>
+      <h1 style="max-width:none;">Try it yourself</h1>
+      <p class="pg-sub">Write JavaScript on the left, press Run, and see the result on the right — it executes right in your browser, nothing is sent anywhere. Use <code>console.log()</code> to print values.</p>
+    </section>
+
+    <div class="examples">
+      <button class="example-btn" data-example="variables">variables example</button>
+      <button class="example-btn" data-example="datatypes">data types example</button>
+      <button class="example-btn" data-example="functions">functions example</button>
+      <button class="example-btn" data-example="arrays">arrays example</button>
+      <button class="example-btn" data-example="objects">objects example</button>
+    </div>
+
+    <div class="pg-wrap">
+      <div class="editor-panel code-window">
+        <div class="pg-toolbar">
+          <span class="code-filename" style="margin-left:0;">script</span>
+          <button class="run-btn" id="runBtn">Run &#9656;</button>
+        </div>
+        <textarea class="editor-textarea" id="codeInput" spellcheck="false">let name = "student";
+let score = 0;
+
+function greet(who) {
+  return `Hello, ${who}!`;
+}
+
+console.log(greet(name));
+
+score += 10;
+console.log("Score:", score);</textarea>
+      </div>
+      <div class="output-panel code-window">
+        <div class="pg-toolbar">
+          <span class="code-filename" style="margin-left:0;">console</span>
+          <span class="output-tag">output</span>
+        </div>
+        <pre class="output-pre" id="outputBox">// output will appear here</pre>
+      </div>
+    </div>
+
+    <footer>
+      <p>js-basics — interactive playground</p>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <a href="portal.html" class="btn-back-footer">&larr; Back to portal</a>
+        <button class="btn-back-footer" id="footerLogoutBtn" style="background:transparent;border:1px solid var(--line);cursor:pointer;color:var(--coral);">Log out</button>
+      </div>
+    </footer>
+
+</main>
+
+<script>
+  const examples = {
+    variables: `let city = "Cebu";
+const country = "Philippines";
+var visits = 3;
+
+console.log(city, country, visits);`,
+    datatypes: `console.log(typeof "hello");
+console.log(typeof 42);
+console.log(typeof true);
+console.log(typeof undefined);
+console.log(typeof null);
+console.log(typeof {});`,
+    functions: `function square(n) {
+  return n * n;
+}
+
+const cube = (n) => n * n * n;
+
+console.log(square(4));
+console.log(cube(3));`,
+    arrays: `const topics = ["variables", "data types", "functions"];
+topics.push("arrays");
+console.log(topics);
+
+const lengths = topics.map(t => t.length);
+console.log(lengths);`,
+    objects: `const course = {
+  title: "JavaScript Basics",
+  weeks: 2,
+  describe() {
+    return this.title + " — " + this.weeks + " weeks";
+  }
+};
+
+console.log(course.describe());`
+  };
+
+  const codeInput = document.getElementById('codeInput');
+  const outputBox = document.getElementById('outputBox');
+  const runBtn = document.getElementById('runBtn');
+
+  function formatArg(a){
+    if (typeof a === 'object' && a !== null) {
+      try { return JSON.stringify(a); } catch(e){ return String(a); }
+    }
+    return String(a);
+  }
+
+  function runCode(){
+    const code = codeInput.value;
+    const lines = [];
+    const originalLog = console.log;
+    console.log = (...args) => lines.push(args.map(formatArg).join(' '));
+    try {
+      const result = new Function(code)();
+      if (result !== undefined) lines.push('=> ' + formatArg(result));
+    } catch(err) {
+      lines.push('Error: ' + err.message);
+    } finally {
+      console.log = originalLog;
+    }
+    outputBox.textContent = lines.length ? lines.join('\n') : '(no output — try console.log())';
+  }
+
+  runBtn.addEventListener('click', runCode);
+
+  document.querySelectorAll('.example-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      codeInput.value = examples[btn.dataset.example];
+      runCode();
+    });
+  });
+</script>
+
+<script src="../assets/js/modal.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+<script>
+  function handleStudentLogout() {
+    Modal.confirm(
+      'Log out of Student Portal?',
+      'Are you sure you want to log out? You will be redirected to the login page and will need to sign in again to access your student dashboard.',
+      () => {
+        localStorage.removeItem('markDemoStudent');
+        window.location.href = 'login.html';
+      },
+      { confirmLabel: 'Log out', cancelLabel: 'Cancel', danger: true, kicker: 'confirm action' }
+    );
+  }
+  const sBtn = document.getElementById('sidebarLogoutBtn');
+  if (sBtn) sBtn.addEventListener('click', handleStudentLogout);
+  const fBtn = document.getElementById('footerLogoutBtn');
+  if (fBtn) fBtn.addEventListener('click', handleStudentLogout);
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+/* ============================================================
+   Mark Institute of Technology — Master Stylesheet (style.css)
+   ============================================================
+   Modular Component Architecture:
+   - tokens.css       Design tokens, palette & typography
+   - base.css         Reset, layout shell & footer
+   - background.css   Cyber particle grid animation & video
+   - nav.css          Top navigation bar & brand
+   - sidebar.css      Sidebar shell, links & logout button
+   - buttons.css      Interactive buttons & micro-animations
+   - code.css         Code windows & syntax highlighting
+   - modal.css        Reusable modal dialog component
+   - portal.css       Student & Admin portal dashboards & stat cards
+   - learning.css     Lessons, playground, quiz & resources
+   - auth.css         Login cards, forms, validation & switches
+   - pages.css        Public marketing pages, headers, cards & grids
+   ============================================================ */
+
+@import "tokens.css";
+@import "base.css";
+@import "background.css";
+@import "nav.css";
+@import "sidebar.css";
+@import "buttons.css";
+@import "code.css";
+@import "modal.css";
+@import "portal.css";
+@import "learning.css";
+@import "auth.css";
+@import "pages.css";

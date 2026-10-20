@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — Mark Institute of Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="topbar"></div>
+
+<section class="page-header">
+  <p class="kicker">events.js</p>
+  <h1>Campus events</h1>
+  <p class="page-sub">Filter by category to see what's coming up.</p>
+</section>
+
+<div class="filter-row" id="filterRow">
+  <button class="filter-btn active" data-cat="all">All</button>
+  <button class="filter-btn" data-cat="Academic">Academic</button>
+  <button class="filter-btn" data-cat="Sports">Sports</button>
+  <button class="filter-btn" data-cat="Holiday">Holiday</button>
+</div>
+
+<div class="event-list" id="eventList"></div>
+
+<footer>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project</footer>
+
+<script>
+  const events = [
+    { title: "Freshmen Orientation", date: "Aug 15", cat: "Academic" },
+    { title: "Hackathon Weekend", date: "Sep 20", cat: "Academic" },
+    { title: "Intramurals Basketball Finals", date: "Oct 5", cat: "Sports" },
+    { title: "Foundation Day", date: "Nov 2", cat: "Holiday" },
+    { title: "Career Fair", date: "Nov 18", cat: "Academic" },
+    { title: "Semestral Break", date: "Dec 20", cat: "Holiday" }
+  ];
+
+  const list = document.getElementById('eventList');
+  const buttons = document.querySelectorAll('.filter-btn');
+
+  function render(cat){
+    const filtered = cat === 'all' ? events : events.filter(e => e.cat === cat);
+    list.innerHTML = '';
+    filtered.forEach(e => {
+      const row = document.createElement('div');
+      row.className = 'event-card';
+      row.innerHTML = `
+        <div>
+          <div class="e-title">${e.title}</div>
+          <div class="e-cat">${e.cat}</div>
+        </div>
+        <div class="e-date">${e.date}</div>
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.cat);
+    });
+  });
+
+  render('all');
+</script>
+
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+</body>
+</html>

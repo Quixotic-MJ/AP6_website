@@ -1,0 +1,269 @@
+/* ============================================================
+   Mark Institute of Technology — Modal Dialogs (modal.css)
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 12, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--panel, #0d121f);
+  border: 1px solid var(--line, #1c2538);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 88vh;
+  overflow-y: auto;
+  font-family: var(--sans, 'Inter', sans-serif);
+  color: var(--text, #ECEDF5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 111, 89, 0.15);
+  animation: modalIn .16s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line, #1c2538);
+}
+
+.modal-kicker {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: var(--coral, #FF6F59);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 4px;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text, #ECEDF5);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--muted, #8A8FA8);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all .15s ease;
+}
+
+.modal-close:hover {
+  color: var(--text, #ECEDF5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+  color: var(--muted, #8A8FA8);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+
+/* Detail Rows */
+.modal-detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line, #1c2538);
+  font-size: 13.5px;
+}
+
+.modal-detail-row:last-child {
+  border-bottom: none;
+}
+
+.modal-detail-label {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 11.5px;
+  color: var(--muted, #8A8FA8);
+}
+
+.modal-detail-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Form Fields */
+.modal-field {
+  margin-bottom: 14px;
+}
+
+.modal-field label {
+  display: block;
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: var(--muted, #8A8FA8);
+  margin-bottom: 6px;
+}
+
+.modal-field input,
+.modal-field select,
+.modal-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg, #05070c);
+  border: 1px solid var(--line, #1c2538);
+  border-radius: 7px;
+  padding: 10px 12px;
+  color: var(--text, #ECEDF5);
+  font-family: var(--sans, 'Inter', sans-serif);
+  font-size: 14px;
+  outline: none;
+}
+
+.modal-field input:focus,
+.modal-field select:focus,
+.modal-field textarea:focus {
+  border-color: var(--yellow, #F7DF1E);
+}
+
+.modal-field textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.modal-error {
+  color: var(--coral, #FF6F59);
+  font-size: 12px;
+  margin-top: 6px;
+  display: none;
+}
+
+.modal-error.show {
+  display: block;
+}
+
+/* Footer & Buttons */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--line, #1c2538);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.modal-btn {
+  font-family: var(--sans, 'Inter', sans-serif);
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 9px 18px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.modal-btn-ghost {
+  background: transparent;
+  border-color: var(--line, #1c2538);
+  color: var(--text, #ECEDF5);
+}
+
+.modal-btn-ghost:hover {
+  border-color: var(--muted, #8A8FA8);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.modal-btn-primary {
+  background: var(--yellow, #F7DF1E);
+  color: #05070c;
+}
+
+.modal-btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.modal-btn-danger {
+  background: var(--coral, #FF6F59);
+  color: #05070c;
+}
+
+.modal-btn-danger:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 111, 89, 0.35);
+}
+
+/* Modal Demo Page Helpers */
+.demo-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.demo-section {
+  background: var(--panel, #0d121f);
+  border: 1px solid var(--line, #1c2538);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+  backdrop-filter: blur(6px);
+}
+
+.demo-section h2 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-family: var(--mono, monospace);
+  color: var(--yellow, #F7DF1E);
+}
+
+.demo-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.demo-btn {
+  background: transparent;
+  border: 1px solid var(--line, #1c2538);
+  color: var(--text, #ECEDF5);
+  font-family: var(--sans, sans-serif);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.demo-btn:hover {
+  border-color: var(--yellow, #F7DF1E);
+  color: var(--yellow, #F7DF1E);
+  background: rgba(247, 223, 30, 0.08);
+  transform: translateY(-1px);
+}

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Basics — Learn to Script</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="portal.html" class="sidebar-brand" style="text-decoration:none;color:inherit;" title="Back to Student Portal">
+      <div class="brand-mark"></div>
+      <div class="brand-name">js-basics</div>
+    </a>
+    <div class="sidebar-back">
+      <a href="portal.html" class="btn-back-home" title="Back to Student Portal">
+        <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+        <span>Back to portal</span>
+      </a>
+    </div>
+    <div class="sidebar-label">course files</div>
+    <ul class="file-list">
+      <li class="file-item" data-target="#intro"><span class="file-dot"></span>intro</li>
+      <li class="file-item" data-target="#variables"><span class="file-dot"></span>variables</li>
+      <li class="file-item" data-target="#data-types"><span class="file-dot"></span>data-types</li>
+      <li class="file-item" data-target="#functions"><span class="file-dot"></span>functions</li>
+      <li class="file-item" data-target="#arrays"><span class="file-dot"></span>arrays</li>
+      <li class="file-item" data-target="#objects"><span class="file-dot"></span>objects</li>
+    </ul>
+    <div class="sidebar-label">practice &amp; info</div>
+    <ul class="file-list">
+      <li class="file-item"><a href="playground.html" class="file-link"><span class="file-dot"></span>playground</a></li>
+      <li class="file-item"><a href="quiz.html" class="file-link"><span class="file-dot"></span>quiz</a></li>
+      <li class="file-item"><a href="../public/about.html" class="file-link"><span class="file-dot"></span>About</a></li>
+      <li class="file-item"><a href="../public/resources.html" class="file-link"><span class="file-dot"></span>resources</a></li>
+      <li class="file-item"><a href="../public/contact.html" class="file-link"><span class="file-dot"></span>contact</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout-btn" id="sidebarLogoutBtn">
+        <span>&larr;</span> Log out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="intro">
+      <div>
+        <p class="kicker">JavaScript Basic Course</p>
+        <h1>Understand every line before you write it.</h1>
+        <p>A short, hands-on walkthrough of the five building blocks of JavaScript — variables, data types, functions, arrays, and objects — explained the way you'd actually read them in a script.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#variables">Start with variables</a>
+          <a class="btn btn-ghost" href="#objects">Jump to objects</a>
+        </div>
+      </div>
+      <div class="code-window">
+        <div class="code-titlebar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-filename">welcome</span>
+        </div>
+        <pre class="code"><span class="c-key">const</span> student <span class="c-punc">=</span> {
+  name<span class="c-punc">:</span> <span class="c-str">"You"</span>,
+  learning<span class="c-punc">:</span> [<span class="c-str">"variables"</span>, <span class="c-str">"data types"</span>, <span class="c-str">"functions"</span>],
+  ready<span class="c-punc">:</span> <span class="c-key">true</span>
+};
+
+<span class="c-fn">function</span> <span class="c-fn">begin</span>(student) {
+  <span class="c-key">if</span> (student.ready) {
+    <span class="c-key">return</span> <span class="c-str">`Let's go, ${student.name}`</span>;
+  }
+}
+
+begin(student);
+<span class="c-com">// → "Let's go, You"</span></pre>
+      </div>
+    </section>
+
+    <!-- Variables -->
+    <section class="topic" id="variables">
+      <div class="topic-copy">
+        <div class="topic-head"><span class="file-dot"></span>variables</div>
+        <h2>Variables</h2>
+        <p>A variable is a named container for a value. JavaScript gives you three ways to declare one, and the difference between them is about scope and whether the value can change.</p>
+        <ul>
+          <li><strong>let</strong> — can be reassigned later, scoped to the block it's declared in.</li>
+          <li><strong>const</strong> — cannot be reassigned; use it by default unless you know the value will change.</li>
+          <li><strong>var</strong> — the older way, function-scoped instead of block-scoped. Mostly avoided in modern code.</li>
+        </ul>
+        <p>Naming convention: camelCase, starting with a letter — <em>firstName</em>, not <em>first_name</em> or <em>1stName</em>.</p>
+      </div>
+      <div class="code-window">
+        <div class="code-titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="code-filename">variables</span></div>
+        <pre class="code"><span class="c-key">let</span> score <span class="c-punc">=</span> <span class="c-num">0</span>;
+score <span class="c-punc">=</span> score <span class="c-punc">+</span> <span class="c-num">10</span>;    <span class="c-com">// 10, reassigned</span>
+
+<span class="c-key">const</span> maxPlayers <span class="c-punc">=</span> <span class="c-num">4</span>;
+<span class="c-com">// maxPlayers = 5;  ❌ error — const can't change</span>
+
+<span class="c-key">var</span> oldStyle <span class="c-punc">=</span> <span class="c-str">"still works, rarely used"</span>;</pre>
+      </div>
+    </section>
+
+    <!-- Data Types -->
+    <section class="topic" id="data-types">
+      <div class="topic-copy">
+        <div class="topic-head"><span class="file-dot"></span>data-types</div>
+        <h2>Data types</h2>
+        <p>Every value in JavaScript has a type. The primitive types hold a single value; objects hold collections of values.</p>
+        <ul>
+          <li><strong>String</strong> — text, wrapped in quotes: <em>"hello"</em></li>
+          <li><strong>Number</strong> — integers and decimals: <em>42</em>, <em>3.14</em></li>
+          <li><strong>Boolean</strong> — <em>true</em> or <em>false</em></li>
+          <li><strong>Undefined</strong> — a variable declared but not yet given a value</li>
+          <li><strong>Null</strong> — an intentional "nothing"</li>
+          <li><strong>Object</strong> — a structured collection, including arrays and functions</li>
+        </ul>
+        <p>Use <em>typeof</em> to check what type a value is at any point in your script.</p>
+      </div>
+      <div class="code-window">
+        <div class="code-titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="code-filename">data-types</span></div>
+        <pre class="code"><span class="c-key">typeof</span> <span class="c-str">"hello"</span>;      <span class="c-com">// "string"</span>
+<span class="c-key">typeof</span> <span class="c-num">42</span>;           <span class="c-com">// "number"</span>
+<span class="c-key">typeof</span> <span class="c-key">true</span>;         <span class="c-com">// "boolean"</span>
+<span class="c-key">typeof</span> undefined;    <span class="c-com">// "undefined"</span>
+<span class="c-key">typeof</span> <span class="c-key">null</span>;         <span class="c-com">// "object" (a known quirk)</span>
+<span class="c-key">typeof</span> {};           <span class="c-com">// "object"</span></pre>
+      </div>
+    </section>
+
+    <!-- Functions -->
+    <section class="topic" id="functions">
+      <div class="topic-copy">
+        <div class="topic-head"><span class="file-dot"></span>functions</div>
+        <h2>Functions</h2>
+        <p>Functions are blocks of code designed to perform a particular task, executed when something calls them.</p>
+        <ul>
+          <li><strong>Declaration</strong> — <em>function name() {}</em>, hoisted to the top of its scope</li>
+          <li><strong>Expression</strong> — <em>const name = function() {}</em>, assigned to a variable</li>
+          <li><strong>Arrow function</strong> — <em>const name = () => {}</em>, concise syntax, doesn't bind its own <em>this</em></li>
+        </ul>
+      </div>
+      <div class="code-window">
+        <div class="code-titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="code-filename">functions</span></div>
+        <pre class="code"><span class="c-fn">function</span> <span class="c-fn">greet</span>(name) {
+  <span class="c-key">return</span> <span class="c-str">`Hi, ${name}`</span>;
+}
+
+<span class="c-key">const</span> greetV2 <span class="c-punc">=</span> <span class="c-fn">function</span>(name) {
+  <span class="c-key">return</span> <span class="c-str">`Hi, ${name}`</span>;
+};
+
+<span class="c-key">const</span> greetV3 <span class="c-punc">=</span> (name) <span class="c-punc">=></span> <span class="c-str">`Hi, ${name}`</span>;
+
+greet(<span class="c-str">"Arve"</span>);  <span class="c-com">// "Hi, Arve"</span></pre>
+      </div>
+    </section>
+
+    <!-- Arrays -->
+    <section class="topic" id="arrays">
+      <div class="topic-copy">
+        <div class="topic-head"><span class="file-dot"></span>arrays</div>
+        <h2>Arrays</h2>
+        <p>An array is an ordered list of values, indexed starting at zero. It can hold any data type, including other arrays.</p>
+        <ul>
+          <li><strong>push / pop</strong> — add or remove from the end</li>
+          <li><strong>shift / unshift</strong> — add or remove from the start</li>
+          <li><strong>map</strong> — build a new array by transforming each item</li>
+          <li><strong>filter</strong> — build a new array of items that pass a test</li>
+        </ul>
+      </div>
+      <div class="code-window">
+        <div class="code-titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="code-filename">arrays</span></div>
+        <pre class="code"><span class="c-key">const</span> topics <span class="c-punc">=</span> [<span class="c-str">"variables"</span>, <span class="c-str">"types"</span>, <span class="c-str">"functions"</span>];
+
+topics.push(<span class="c-str">"arrays"</span>);
+<span class="c-com">// ["variables", "types", "functions", "arrays"]</span>
+
+topics[<span class="c-num">0</span>];  <span class="c-com">// "variables" — first item, index 0</span>
+
+<span class="c-key">const</span> shouted <span class="c-punc">=</span> topics.<span class="c-fn">map</span>(t <span class="c-punc">=></span> t.toUpperCase());</pre>
+      </div>
+    </section>
+
+    <!-- Objects -->
+    <section class="topic" id="objects">
+      <div class="topic-copy">
+        <div class="topic-head"><span class="file-dot"></span>objects</div>
+        <h2>Objects</h2>
+        <p>An object stores data as key-value pairs. It's how you group related information — and behavior — into one structure.</p>
+        <ul>
+          <li>Access values with dot notation (<em>obj.key</em>) or bracket notation (<em>obj["key"]</em>)</li>
+          <li>Objects can hold functions as values — these are called methods</li>
+          <li>Inside a method, <strong>this</strong> refers to the object it belongs to</li>
+        </ul>
+      </div>
+      <div class="code-window">
+        <div class="code-titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="code-filename">objects</span></div>
+        <pre class="code"><span class="c-key">const</span> course <span class="c-punc">=</span> {
+  title<span class="c-punc">:</span> <span class="c-str">"JavaScript Basics"</span>,
+  weeks<span class="c-punc">:</span> <span class="c-num">2</span>,
+  <span class="c-fn">describe</span>() {
+    <span class="c-key">return</span> <span class="c-str">`${this.title} — ${this.weeks} weeks`</span>;
+  }
+};
+
+course.describe();
+<span class="c-com">// "JavaScript Basics — 2 weeks"</span></pre>
+      </div>
+    </section>
+
+    <footer>
+      <p>js-basics — a two-week introduction to scripting</p>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <a href="portal.html" class="btn-back-footer">&larr; Back to portal</a>
+        <button class="btn-back-footer" id="footerLogoutBtn" style="background:transparent;border:1px solid var(--line);cursor:pointer;color:var(--coral);">Log out</button>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  const items = document.querySelectorAll('.file-item');
+  const sections = document.querySelectorAll('section.topic, section.hero');
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const target = document.querySelector(item.dataset.target);
+      if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  const map = {'#intro':items[0]};
+  items.forEach(i => map[i.dataset.target] = i);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        items.forEach(i => i.classList.remove('active'));
+        if (map[id]) map[id].classList.add('active');
+      }
+    });
+  }, {rootMargin:'-40% 0px -50% 0px'});
+
+  sections.forEach(s => observer.observe(s));
+</script>
+<script src="../assets/js/modal.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+<script>
+  function handleStudentLogout() {
+    Modal.confirm(
+      'Log out of Student Portal?',
+      'Are you sure you want to log out? You will be redirected to the login page and will need to sign in again to access your student dashboard.',
+      () => {
+        localStorage.removeItem('markDemoStudent');
+        window.location.href = 'login.html';
+      },
+      { confirmLabel: 'Log out', cancelLabel: 'Cancel', danger: true, kicker: 'confirm action' }
+    );
+  }
+  const sBtn = document.getElementById('sidebarLogoutBtn');
+  if (sBtn) sBtn.addEventListener('click', handleStudentLogout);
+  const fBtn = document.getElementById('footerLogoutBtn');
+  if (fBtn) fBtn.addEventListener('click', handleStudentLogout);
+</script>
+</body>
+</html>

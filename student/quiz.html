@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Basics — Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="portal.html" class="sidebar-brand" style="text-decoration:none;color:inherit;" title="Back to Student Portal">
+      <div class="brand-mark"></div>
+      <div class="brand-name">js-basics</div>
+    </a>
+    <div class="sidebar-back">
+      <a href="portal.html" class="btn-back-home" title="Back to Student Portal">
+        <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+        <span>Back to portal</span>
+      </a>
+    </div>
+    <div class="sidebar-label">course files</div>
+    <ul class="file-list">
+      <li class="file-item"><a href="lessons.html#intro" class="file-link"><span class="file-dot"></span>intro</a></li>
+      <li class="file-item"><a href="lessons.html#variables" class="file-link"><span class="file-dot"></span>variables</a></li>
+      <li class="file-item"><a href="lessons.html#data-types" class="file-link"><span class="file-dot"></span>data-types</a></li>
+      <li class="file-item"><a href="lessons.html#functions" class="file-link"><span class="file-dot"></span>functions</a></li>
+      <li class="file-item"><a href="lessons.html#arrays" class="file-link"><span class="file-dot"></span>arrays</a></li>
+      <li class="file-item"><a href="lessons.html#objects" class="file-link"><span class="file-dot"></span>objects</a></li>
+    </ul>
+    <div class="sidebar-label">practice &amp; info</div>
+    <ul class="file-list">
+      <li class="file-item"><a href="playground.html" class="file-link"><span class="file-dot"></span>playground</a></li>
+      <li class="file-item active"><a href="quiz.html" class="file-link"><span class="file-dot"></span>quiz</a></li>
+      <li class="file-item"><a href="../public/about.html" class="file-link"><span class="file-dot"></span>About</a></li>
+      <li class="file-item"><a href="../public/resources.html" class="file-link"><span class="file-dot"></span>resources</a></li>
+      <li class="file-item"><a href="../public/contact.html" class="file-link"><span class="file-dot"></span>contact</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout-btn" id="sidebarLogoutBtn">
+        <span>&larr;</span> Log out
+      </button>
+    </div>
+  </aside>
+
+
+<main>
+
+    <section class="quiz-header">
+      <p class="kicker">quiz</p>
+      <h1 style="max-width:none;">Test what you know</h1>
+      <p class="pg-sub" style="color:var(--muted);max-width:60ch;margin:14px 0 0;font-size:15.5px;">Eight questions covering variables, data types, functions, arrays, and objects.</p>
+      <p class="quiz-score">Score: <strong id="scoreValue">0</strong>/8</p>
+    </section>
+
+    <div class="quiz-list" id="quizList"></div>
+
+    <div class="quiz-footer" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <button class="restart-btn" id="restartBtn">Restart quiz</button>
+      <a href="portal.html" class="btn-back-footer">&larr; Back to portal</a>
+      <button class="btn-back-footer" id="footerLogoutBtn" style="background:transparent;border:1px solid var(--line);cursor:pointer;color:var(--coral);">Log out</button>
+    </div>
+
+</main>
+
+<script>
+  const questions = [
+    {
+      file: "variables",
+      q: "Which keyword creates a variable that can't be reassigned?",
+      options: ["let", "const", "var", "function"],
+      correct: 1,
+      explain: "const locks the binding — its value can't be reassigned after it's declared."
+    },
+    {
+      file: "data-types",
+      q: 'What does typeof [] return?',
+      options: ['"array"', '"object"', '"list"', '"undefined"'],
+      correct: 1,
+      explain: 'Arrays are a kind of object in JavaScript, so typeof returns "object".'
+    },
+    {
+      file: "arrays",
+      q: "Which array method adds an item to the end?",
+      options: ["shift()", "unshift()", "push()", "pop()"],
+      correct: 2,
+      explain: "push() appends one or more items to the end of an array."
+    },
+    {
+      file: "data-types",
+      q: 'What does typeof "42" return?',
+      options: ['"number"', '"string"', '"boolean"', '"NaN"'],
+      correct: 1,
+      explain: "Even though it looks like a number, it's wrapped in quotes — so it's a string."
+    },
+    {
+      file: "objects",
+      q: "Inside an object's method, what does this refer to?",
+      options: ["The global window", "The object the method belongs to", "The function itself", "It's always undefined"],
+      correct: 1,
+      explain: "Inside a regular method, this refers to the object that owns the method."
+    },
+    {
+      file: "functions",
+      q: "Which is a correctly written arrow function?",
+      options: ["function => (x) { return x }", "(x) => x * 2", "x -> x * 2", "arrow(x) { return x }"],
+      correct: 1,
+      explain: "Arrow functions use (params) => expression syntax."
+    },
+    {
+      file: "data-types",
+      q: "What does typeof null return?",
+      options: ['"null"', '"undefined"', '"object"', '"boolean"'],
+      correct: 2,
+      explain: "This is a long-standing JavaScript quirk — typeof null returns \"object\"."
+    },
+    {
+      file: "objects",
+      q: 'How do you read the "age" property from an object called person?',
+      options: ["person->age", "person.age", "person::age", "person[age] (no quotes)"],
+      correct: 1,
+      explain: 'Dot notation (person.age) or bracket notation with a string (person["age"]) both work.'
+    }
+  ];
+
+  let score = 0;
+  const list = document.getElementById('quizList');
+  const scoreValue = document.getElementById('scoreValue');
+  const restartBtn = document.getElementById('restartBtn');
+
+  function render(){
+    list.innerHTML = '';
+    questions.forEach((item, qi) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+
+      const file = document.createElement('div');
+      file.className = 'q-file';
+      file.textContent = item.file;
+      card.appendChild(file);
+
+      const prompt = document.createElement('p');
+      prompt.className = 'q-prompt';
+      prompt.textContent = item.q;
+      card.appendChild(prompt);
+
+      const opts = document.createElement('div');
+      opts.className = 'q-options';
+
+      const explain = document.createElement('div');
+      explain.className = 'q-explain';
+      explain.textContent = item.explain;
+
+      item.options.forEach((opt, oi) => {
+        const btn = document.createElement('button');
+        btn.className = 'q-option';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          const buttons = opts.querySelectorAll('.q-option');
+          buttons.forEach(b => b.disabled = true);
+          if (oi === item.correct) {
+            btn.classList.add('correct');
+            score++;
+            scoreValue.textContent = score;
+          } else {
+            btn.classList.add('incorrect');
+            buttons[item.correct].classList.add('correct');
+          }
+          explain.classList.add('show');
+          maybeShowRestart();
+        });
+        opts.appendChild(btn);
+      });
+
+      card.appendChild(opts);
+      card.appendChild(explain);
+      list.appendChild(card);
+    });
+  }
+
+  function maybeShowRestart(){
+    const answered = list.querySelectorAll('.q-option:disabled').length;
+    const totalOptions = questions.reduce((sum, q) => sum + q.options.length, 0);
+    const answeredQuestions = list.querySelectorAll('.q-explain.show').length;
+    if (answeredQuestions === questions.length) {
+      restartBtn.classList.add('show');
+    }
+  }
+
+  restartBtn.addEventListener('click', () => {
+    score = 0;
+    scoreValue.textContent = 0;
+    restartBtn.classList.remove('show');
+    render();
+  });
+
+  render();
+</script>
+
+<script src="../assets/js/modal.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+<script>
+  function handleStudentLogout() {
+    Modal.confirm(
+      'Log out of Student Portal?',
+      'Are you sure you want to log out? You will be redirected to the login page and will need to sign in again to access your student dashboard.',
+      () => {
+        localStorage.removeItem('markDemoStudent');
+        window.location.href = 'login.html';
+      },
+      { confirmLabel: 'Log out', cancelLabel: 'Cancel', danger: true, kicker: 'confirm action' }
+    );
+  }
+  const sBtn = document.getElementById('sidebarLogoutBtn');
+  if (sBtn) sBtn.addEventListener('click', handleStudentLogout);
+  const fBtn = document.getElementById('footerLogoutBtn');
+  if (fBtn) fBtn.addEventListener('click', handleStudentLogout);
+</script>
+</div>
+</body>
+</html>

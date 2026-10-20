@@ -1,0 +1,60 @@
+/* ============================================================
+   Mark Institute of Technology — Code Windows & Syntax (code.css)
+   ============================================================ */
+
+.code-window {
+  background: rgba(28, 31, 44, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.hero .code-window {
+  max-width: 100%;
+  margin: 0;
+}
+
+.code-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.dot.r { background: #FF5F57; }
+.dot.y { background: #FEBC2E; }
+.dot.g { background: #28C840; }
+
+.code-filename {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+pre.code {
+  margin: 0;
+  padding: 22px 24px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+/* Syntax Highlighting Tokens */
+.c-key  { color: var(--coral); }
+.c-str  { color: var(--green); }
+.c-num  { color: var(--blue); }
+.c-fn   { color: var(--purple); }
+.c-com  { color: var(--muted); }
+.c-punc { color: #B9BDD1; }

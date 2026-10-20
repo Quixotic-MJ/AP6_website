@@ -1,0 +1,73 @@
+/* ============================================================
+   Mark Institute of Technology — Topbar Navigation (nav.css)
+   ============================================================ */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 56px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(5, 7, 12, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 50;
+}
+
+@media (max-width: 860px) {
+  .topbar {
+    padding: 16px 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-mark {
+  width: 16px;
+  height: 16px;
+  background: var(--yellow);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+.topbar nav a {
+  text-decoration: none;
+  transition: color .15s ease;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.topbar nav a:hover {
+  color: var(--text);
+}
+
+.topbar nav a.active {
+  color: var(--yellow);
+}

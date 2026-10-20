@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admissions — Mark Institute of Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="topbar"></div>
+
+<section class="page-header">
+  <p class="kicker">admissions.js</p>
+  <h1>Apply to Mark</h1>
+  <p class="page-sub">Pick a program to see an estimated tuition &mdash; it's calculated live as you choose.</p>
+</section>
+
+<div class="admit-wrap">
+  <div class="admit-card">
+    <form id="admitForm">
+      <div class="field">
+        <label>full name</label>
+        <input type="text" id="fName" placeholder="Your full name" required>
+        <p class="error-text" id="nameError">Please enter your name.</p>
+      </div>
+      <div class="field">
+        <label>email address</label>
+        <input type="text" id="fEmail" placeholder="you@example.com" required>
+        <p class="error-text" id="emailError">Please enter a valid email address.</p>
+      </div>
+      <div class="field">
+        <label>program</label>
+        <select id="fProgram">
+          <option value="0">BS Computer Science &mdash; 4 years</option>
+          <option value="1">BS Information Technology &mdash; 4 years</option>
+          <option value="2">BS Data Science &mdash; 4 years</option>
+          <option value="3">Diploma in Web Development &mdash; 2 years</option>
+          <option value="4">BS Computer Engineering &mdash; 5 years</option>
+        </select>
+      </div>
+      <button type="submit" class="send-btn">Submit application &#9656;</button>
+    </form>
+  </div>
+
+  <div class="estimate-card">
+    <div class="e-label">estimated total tuition</div>
+    <div class="e-total" id="totalEstimate">&#8369;0</div>
+    <div class="e-detail" id="estimateDetail"></div>
+  </div>
+</div>
+
+<footer>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project</footer>
+
+<script>
+  const programs = [
+    { name: "BS Computer Science", years: 4, perYear: 65000 },
+    { name: "BS Information Technology", years: 4, perYear: 60000 },
+    { name: "BS Data Science", years: 4, perYear: 68000 },
+    { name: "Diploma in Web Development", years: 2, perYear: 55000 },
+    { name: "BS Computer Engineering", years: 5, perYear: 72000 }
+  ];
+
+  const select = document.getElementById('fProgram');
+  const totalEl = document.getElementById('totalEstimate');
+  const detailEl = document.getElementById('estimateDetail');
+
+  function formatPeso(n){
+    return '₱' + n.toLocaleString('en-US');
+  }
+
+  function calculateTuition(programIndex){
+    const program = programs[programIndex];
+    const total = program.years * program.perYear;
+    return { program, total };
+  }
+
+  function updateEstimate(){
+    const { program, total } = calculateTuition(Number(select.value));
+    totalEl.textContent = formatPeso(total);
+    detailEl.textContent = `${program.name} · ${program.years} years at ${formatPeso(program.perYear)} per year`;
+  }
+
+  select.addEventListener('change', updateEstimate);
+  updateEstimate();
+
+  const form = document.getElementById('admitForm');
+  const nameInput = document.getElementById('fName');
+  const emailInput = document.getElementById('fEmail');
+  const nameError = document.getElementById('nameError');
+  const emailError = document.getElementById('emailError');
+
+  function isValidEmail(value){
+    return typeof value === 'string' && value.includes('@') && value.includes('.');
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+
+    if (nameInput.value.trim() === '') {
+      nameError.classList.add('show');
+      valid = false;
+    } else {
+      nameError.classList.remove('show');
+    }
+
+    if (!isValidEmail(emailInput.value.trim())) {
+      emailError.classList.add('show');
+      valid = false;
+    } else {
+      emailError.classList.remove('show');
+    }
+
+    if (!valid) return;
+
+    const { program, total } = calculateTuition(Number(select.value));
+    const subject = encodeURIComponent('Application — ' + program.name);
+    const body = encodeURIComponent(
+      'Name: ' + nameInput.value + '\n' +
+      'Email: ' + emailInput.value + '\n' +
+      'Program: ' + program.name + '\n' +
+      'Estimated tuition: ' + formatPeso(total)
+    );
+    window.location.href = 'mailto:arve.baes@ctu.edu.ph?subject=' + subject + '&body=' + body;
+  });
+</script>
+
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+</body>
+</html>

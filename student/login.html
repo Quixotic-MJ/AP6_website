@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login — Mark Institute of Technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+  <div class="topbar"></div>
+
+  <div class="login-wrap">
+    <h1>Student login</h1>
+    <p class="login-sub">For enrolled students to access tutorials, practice, events, and groups.</p>
+
+
+    <div class="login-card">
+      <form id="loginForm">
+        <div class="field">
+          <label>student email</label>
+          <input type="text" id="loginEmail" placeholder="you@mark.edu">
+          <p class="error-text" id="emailError">Please enter your student email.</p>
+        </div>
+        <div class="field">
+          <label>password</label>
+          <input type="password" id="loginPassword" placeholder="Enter any password">
+          <p class="error-text" id="passwordError">Please enter a password.</p>
+        </div>
+        <button type="submit" class="login-btn">Log in &#9656;</button>
+      </form>
+    </div>
+
+    <p class="apply-note">Not enrolled yet? <a href="../public/admissions.html">Apply here</a></p>
+  </div>
+
+  <footer>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project
+  </footer>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      let valid = true;
+
+      if (emailInput.value.trim() === '') {
+        emailError.classList.add('show');
+        valid = false;
+      } else {
+        emailError.classList.remove('show');
+      }
+
+      if (passwordInput.value.trim() === '') {
+        passwordError.classList.add('show');
+        valid = false;
+      } else {
+        passwordError.classList.remove('show');
+      }
+
+      if (!valid) return;
+
+      // Demo-only "session" — a real backend would issue a token here instead.
+      const studentName = emailInput.value.split('@')[0];
+      localStorage.setItem('markDemoStudent', JSON.stringify({
+        name: studentName,
+        email: emailInput.value.trim(),
+        loggedInAt: new Date().toISOString()
+      }));
+
+      window.location.href = 'portal.html';
+    });
+  </script>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/tech-bg.js"></script>
+</body>
+
+</html>

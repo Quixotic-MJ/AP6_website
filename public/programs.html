@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programs — Mark Institute of Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Tech Background -->
+  <div class="stage">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="scanline"></div>
+    <canvas id="net"></canvas>
+  </div>
+
+<div class="topbar"></div>
+
+<section class="page-header">
+  <p class="kicker">programs.js</p>
+  <h1>Degree programs</h1>
+  <p class="page-sub">Five programs across two colleges. Filter by department to narrow the list &mdash; the filtering runs live in your browser.</p>
+</section>
+
+<div class="filter-row" id="filterRow">
+  <button class="filter-btn active" data-dept="all">All programs</button>
+  <button class="filter-btn" data-dept="Computing">College of Computing</button>
+  <button class="filter-btn" data-dept="Engineering">College of Engineering</button>
+</div>
+
+<div class="program-grid" id="programGrid"></div>
+
+<footer>Mark Institute of Technology &mdash; a fictional college built for the JavaScript Basic Course project</footer>
+
+<script>
+  const programs = [
+    { name: "BS Computer Science", track: "Software Engineering Track", dept: "Computing", years: 4, desc: "Algorithms, software design, and full-stack development." },
+    { name: "BS Information Technology", track: "Network & Systems Track", dept: "Computing", years: 4, desc: "Infrastructure, systems administration, and IT support." },
+    { name: "BS Data Science", track: "Analytics Track", dept: "Computing", years: 4, desc: "Statistics, machine learning, and data-driven decision making." },
+    { name: "Diploma in Web Development", track: "Front-End & Back-End Track", dept: "Computing", years: 2, desc: "A fast-track program focused on building real websites and apps." },
+    { name: "BS Computer Engineering", track: "Embedded Systems Track", dept: "Engineering", years: 5, desc: "Hardware, embedded programming, and systems integration." }
+  ];
+
+  const grid = document.getElementById('programGrid');
+  const buttons = document.querySelectorAll('.filter-btn');
+
+  function render(dept){
+    grid.innerHTML = '';
+    const filtered = dept === 'all' ? programs : programs.filter(p => p.dept === dept);
+    filtered.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'program-card';
+      card.innerHTML = `
+        <div class="p-dept">College of ${p.dept}</div>
+        <div class="p-name">${p.name}</div>
+        <div class="p-desc">${p.desc} &mdash; ${p.track}.</div>
+        <div class="p-meta"><span>${p.years} years</span></div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.dept);
+    });
+  });
+
+  render('all');
+</script>
+
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/tech-bg.js"></script>
+</body>
+</html>

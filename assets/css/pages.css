@@ -1,0 +1,781 @@
+/* ============================================================
+   Mark Institute of Technology — Public Pages (pages.css)
+   ============================================================ */
+
+/* ---------- Core Typography & Highlighting Tokens ---------- */
+.c-key  { color: var(--coral, #FF6F59); }
+.c-fn   { color: var(--purple, #C9A6FF); }
+.c-str  { color: var(--green, #8FD694); }
+.c-num  { color: var(--blue, #7DB8FF); }
+.c-punc { color: #B9BDD1; }
+.c-com  { color: var(--muted, #8A8FA8); font-style: italic; }
+.g      { color: var(--green, #8FD694); }
+.r      { color: var(--coral, #FF6F59); }
+.y      { color: var(--yellow, #F7DF1E); }
+
+.code-filename {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+/* ---------- Common Public Page Containers & Headers ---------- */
+.page-header {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 48px 56px 0;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+@media (max-width: 860px) {
+  .page-header {
+    padding: 32px 24px 0;
+  }
+}
+
+.page-header h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  margin: 0 0 12px;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.page-sub {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 8px 0 0;
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
+/* Page content layouts share standard gutters and max-width */
+.page-body,
+.admit-wrap,
+.filter-row,
+.program-grid,
+.search-row,
+.faculty-list,
+.event-list,
+.contact-body,
+.err-wrap {
+  max-width: 1060px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 56px;
+  padding-right: 56px;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+@media (max-width: 860px) {
+  .page-body,
+  .admit-wrap,
+  .filter-row,
+  .program-grid,
+  .search-row,
+  .faculty-list,
+  .event-list,
+  .contact-body,
+  .err-wrap {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* ---------- 1. Homepage Components ---------- */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 56px 60px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 56px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 44px 24px 36px;
+    gap: 32px;
+  }
+}
+
+.hero h1 {
+  font-size: clamp(32px, 4.2vw, 50px);
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+  margin: 0 0 18px;
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 48ch;
+  margin: 0 0 24px;
+  line-height: 1.65;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+/* Public Live Stats Bar */
+.stats {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 56px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 860px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat {
+  background: rgba(13, 18, 31, 0.78);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 24px 20px;
+  text-align: center;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.stat:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.stat:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+@media (max-width: 860px) {
+  .stat:first-child { border-radius: 12px 0 0 0; }
+  .stat:nth-child(2) { border-radius: 0 12px 0 0; }
+  .stat:nth-child(3) { border-radius: 0 0 0 12px; }
+  .stat:last-child { border-radius: 0 0 12px 0; }
+}
+
+@media (max-width: 480px) {
+  .stat { border-radius: 8px !important; margin-bottom: 8px; }
+}
+
+.stat:hover {
+  border-color: rgba(247, 223, 30, 0.4);
+  background: rgba(20, 27, 45, 0.88);
+}
+
+.stat .num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--yellow);
+  line-height: 1.2;
+  text-shadow: 0 0 16px rgba(247, 223, 30, 0.25);
+}
+
+.stat .label {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Public Announcements Section */
+.announce-section {
+  max-width: 860px;
+  margin: 64px auto 0;
+  padding: 0 56px;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+@media (max-width: 860px) {
+  .announce-section {
+    padding: 0 24px;
+    margin-top: 44px;
+  }
+}
+
+.announce-section h2 {
+  font-size: 22px;
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
+}
+
+.announce-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.announce-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 20px;
+  backdrop-filter: blur(6px);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.announce-item:hover {
+  border-color: rgba(247, 223, 30, 0.35);
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 600px) {
+  .announce-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+.announce-item .a-title {
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.announce-item .a-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--yellow);
+  flex-shrink: 0;
+}
+
+/* Footer Container & Staff Access */
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.staff-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all .15s ease;
+}
+
+.staff-login-btn:hover {
+  color: var(--purple);
+  border-color: var(--purple);
+  background: rgba(201, 166, 255, 0.08);
+}
+
+.staff-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 0 6px rgba(201, 166, 255, 0.5);
+}
+
+/* ---------- 2. About Page Components ---------- */
+.page-body {
+  margin-top: 32px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 860px) {
+  .page-body {
+    margin-top: 24px;
+    padding-bottom: 44px;
+  }
+}
+
+.page-body h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 32px 0 10px;
+  color: var(--text);
+}
+
+.page-body h2:first-child {
+  margin-top: 0;
+}
+
+.page-body p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 72ch;
+  margin: 0 0 18px;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.value-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(6px);
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.value-card:hover {
+  border-color: rgba(247, 223, 30, 0.35);
+  transform: translateY(-2px);
+}
+
+.value-card .v-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.value-card .v-desc {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ---------- 3. Admissions Page Components ---------- */
+.admit-wrap {
+  margin-top: 32px;
+  padding-bottom: 60px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 860px) {
+  .admit-wrap {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+    padding-bottom: 44px;
+    gap: 24px;
+  }
+}
+
+.admit-card,
+.estimate-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px;
+  backdrop-filter: blur(6px);
+  box-sizing: border-box;
+}
+
+.estimate-card .e-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.estimate-card .e-detail {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.estimate-card .e-total {
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--yellow);
+  margin: 12px 0 20px;
+  text-shadow: 0 0 16px rgba(247, 223, 30, 0.25);
+}
+
+.send-btn {
+  background: var(--yellow);
+  color: #05070c;
+  border: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+  width: 100%;
+}
+
+.send-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(247, 223, 30, 0.3);
+}
+
+/* ---------- 4. Programs Page Components ---------- */
+.filter-row {
+  margin-top: 28px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 860px) {
+  .filter-row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.filter-btn:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.filter-btn.active {
+  color: #05070c;
+  background: var(--yellow);
+  border-color: var(--yellow);
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(247, 223, 30, 0.3);
+}
+
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 860px) {
+  .program-grid {
+    padding-bottom: 44px;
+  }
+}
+
+.program-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(6px);
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.program-card:hover {
+  border-color: rgba(247, 223, 30, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.program-card .p-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.program-card .p-meta {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--yellow);
+  margin-bottom: 8px;
+}
+
+.program-card .p-dept {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.program-card .p-desc {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---------- 5. Faculty Page Components ---------- */
+.search-row {
+  margin-top: 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 860px) {
+  .search-row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.search-input {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--text);
+  outline: none;
+  min-width: 280px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.search-input:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(247, 223, 30, 0.15);
+}
+
+.search-count {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.faculty-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 860px) {
+  .faculty-list {
+    padding-bottom: 44px;
+  }
+}
+
+.faculty-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+  backdrop-filter: blur(6px);
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.faculty-card:hover {
+  border-color: rgba(247, 223, 30, 0.35);
+  transform: translateY(-2px);
+}
+
+.faculty-card .f-name {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.faculty-card .f-dept {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--yellow);
+  margin-bottom: 10px;
+}
+
+.faculty-card .f-email {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 13.5px;
+  grid-column: 1 / -1;
+}
+
+/* ---------- 6. Events Page Components ---------- */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 860px) {
+  .event-list {
+    padding-bottom: 44px;
+  }
+}
+
+.event-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  backdrop-filter: blur(6px);
+  flex-wrap: wrap;
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.event-card:hover {
+  border-color: rgba(247, 223, 30, 0.35);
+  transform: translateX(3px);
+}
+
+.event-card .e-date {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--yellow);
+  font-weight: 600;
+}
+
+.event-card .e-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.event-card .e-cat {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+/* ---------- 7. Contact Page Components ---------- */
+.contact-body {
+  margin-top: 32px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 860px) {
+  .contact-body {
+    margin-top: 24px;
+    padding-bottom: 44px;
+  }
+}
+
+.contact-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 620px;
+  backdrop-filter: blur(6px);
+  box-sizing: border-box;
+}
+
+.contact-card p {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+/* ---------- 8. 404 Page Components ---------- */
+.err-wrap {
+  text-align: center;
+  padding-top: 80px;
+  padding-bottom: 100px;
+}
+
+@media (max-width: 860px) {
+  .err-wrap {
+    padding-top: 60px;
+    padding-bottom: 80px;
+  }
+}
+
+.err-code {
+  font-family: var(--mono);
+  font-size: clamp(64px, 8vw, 96px);
+  font-weight: 700;
+  color: var(--yellow);
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 24px rgba(247, 223, 30, 0.3);
+}
+
+.err-msg {
+  font-size: 18px;
+  color: var(--muted);
+  margin: 14px auto 32px;
+  max-width: 48ch;
+  line-height: 1.5;
+}
+
+.corner-tag {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  padding: 16px 24px;
+}
+
+.corner-tag.tl { top: 0; left: 0; }
+.corner-tag.br { bottom: 0; right: 0; }
